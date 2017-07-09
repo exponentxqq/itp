@@ -6,8 +6,8 @@
  * Time: 下午3:29
  */
 
-namespace Frame\Core;
+//namespace Frame\Core;
 
 class Frame{
-
+    public static function start(){}
 }
