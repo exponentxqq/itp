@@ -15,7 +15,6 @@ class Frame
     public static function start()
     {
         // 注册AUTOLOAD方法
-//        spl_autoload_register('Core\Frame::autoload');
         self::getConfig();
         self::setConst();
         spl_autoload_register('self::autoload');
