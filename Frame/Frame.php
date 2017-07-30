@@ -12,4 +12,4 @@ define('FRAME_PATH', __DIR__.DIRECTORY_SEPARATOR);
 
 include(FRAME_PATH.'Core/Frame.class.php');
 
-Frame::start();
+Core\Frame::start();
