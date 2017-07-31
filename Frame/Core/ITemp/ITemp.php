@@ -12,7 +12,7 @@ class ITemp
         'suffix'       => '.m',             //设置模版文件的后缀
         'tempDir'      => './temp/',        //设置模版所在的文件夹
         'compileDir'   => './Runtime/',     //设置编译后文件存放的目录
-        'cache_htm'     => false,           //是否需要编译成静态的html页面
+        'cache_htm'    => false,            //是否需要编译成静态的html页面
         'suffix_cache' => '.htm',           //设置编译文件的后缀
         'cache_time'   => 7200,             //多长时间自动更新，单位s
         'php_turn'     => false,            //是否支持原生php
@@ -43,11 +43,14 @@ class ITemp
         if(!is_dir($this->config['compileDir'])){
             mkdir($this->config['compileDir'],0770,true);
         }
-        include './Compile.php';
+        include CORE_PATH.'ITemp/Compile.php';
     }
 
     public function getPath(){
         $this->config['tempDir'] = strtr(realpath($this->config['tempDir']),'\\','/').'/';
+        if(!is_dir($this->config['compileDir'])){
+            mkdir($this->config['compileDir'],0770,true);
+        }
         $this->config['compileDir'] = strtr(realpath($this->config['compileDir']),'\\','/').'/';
     }
 
@@ -96,9 +99,9 @@ class ITemp
             exit("模版不存在！");
         }
 
-        $compileFile = $this->config['compileDir'].'/'.md5($file).'.php';
+        $compileFile = $this->config['compileDir'].md5($file).'.php';
         $cacheFile = $this->config['compileDir'].md5($file).'.htm';
-        if($this->reCache($file)){
+        if($this->reCache($file) === false){
             $this->debug['cached'] = 'false';
             $this->compileTool = new Compile($this->path(), $compileFile, $this->config);
             if($this->needCache()) ob_start();

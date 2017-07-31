@@ -8,7 +8,7 @@
  * 框架引导文件
  */
 //定义框架目录的路径
-define('FRAME_PATH', __DIR__.DIRECTORY_SEPARATOR);
+define('FRAME_PATH', str_replace('\\','/',__DIR__.DIRECTORY_SEPARATOR));
 
 include(FRAME_PATH.'Core/Frame.class.php');
 

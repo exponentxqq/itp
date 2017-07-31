@@ -10,7 +10,9 @@ namespace Core;
 
 class Frame
 {
-    private static $map;
+    private static $map = [
+        'Core' => FRAME_PATH
+    ];
 
     public static function start()
     {
@@ -47,7 +49,13 @@ class Frame
 
     public static function autoload($class_name)
     {
-        $filename = APP_PATH.$class_name.'.class.php';
+        $class_name = str_replace('\\','/',$class_name);
+        $path = strstr($class_name, '/', true);
+        if(isset(self::$map[$path])){
+            $filename = self::$map[$path].$class_name.'.class.php';
+        }else {
+            $filename = APP_PATH . $class_name . '.class.php';
+        }
         $filename = str_replace('\\','/',$filename);
         if(file_exists($filename)) {
             $r = include_once $filename;
@@ -55,19 +63,22 @@ class Frame
     }
 
     private static function getModule(){
-        $module   = $_GET['m'];
+        $module   = @$_GET['m'] ? $_GET['m'] : $GLOBALS['conf']['M'];
+        define('MODULE_NAME',$module);
 
         return strip_tags(ucfirst($module));
     }
 
     private static function getController(){
-        $controller = $_GET['c'];
+        $controller = @$_GET['c'] ? $_GET['c'] : $GLOBALS['conf']['C'];
+        define('CONTROLLER_NAME',$controller);
 
         return strip_tags(ucfirst($controller));
     }
 
     private static function getAction(){
-        $action = $_GET['a'];
+        $action = @$_GET['a'] ? $_GET['a'] : $GLOBALS['conf']['A'];
+        define('ACTION_NAME',$action);
 
         return strip_tags(ucfirst($action));
     }

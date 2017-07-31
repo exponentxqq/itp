@@ -68,13 +68,4 @@ class Compile
     {
         return $this->$name;
     }
-
-
-    public function c_var(){
-        $patten = "#\{\\$([a-zA-Z_\xff][a-zA-Z0-9_\x7f-\xff]*)\}#";
-        if(strpos($this->content, '{$') !== false){
-            $this->content = preg_replace($patten, "<?php echo \$this->value['\\1']; ?>",$this->content);
-        }
-    }
-
 }
