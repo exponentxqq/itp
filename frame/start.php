@@ -10,6 +10,6 @@
 
 namespace frame;
 
-include ROOT_PATH.'frame/base.php';
+include ROOT_PATH . 'frame/base.php';
 
-var_dump(new Error());
+App::run();
