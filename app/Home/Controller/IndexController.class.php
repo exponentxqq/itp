@@ -13,7 +13,7 @@ use Core\Controller;
 class IndexController extends Controller
 {
     public function index(){
-        echo 'This is first method of the framework.';
+        dump($_SERVER);
     }
 
     public function test(){

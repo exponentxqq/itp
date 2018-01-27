@@ -25,6 +25,7 @@ class Frame
 
     public static function getConfig()
     {
+        $r = include FRAME_PATH . 'library/Common/functions.php';
         $GLOBALS['conf'] = include FRAME_PATH . 'Config/config.php';
     }
 
