@@ -21,36 +21,38 @@ class Loader
     /**
      * 注册自动加载机制
      * @access public
+     *
      * @param  callable $autoload 自动加载处理方法
+     *
      * @return void
      */
     public static function register($autoload = null)
     {
         // spl_autoload_register函数创建了 autoload 函数的队列，按定义时的顺序逐个执行
-        spl_autoload_register($autoload ?: 'static::autoload', true, true);
+        spl_autoload_register($autoload ? : 'static::autoload', true, true);
 
-        is_dir(VENDOR_PATH.'composer') and include VENDOR_PATH.'autoload.php';
+        is_dir(VENDOR_PATH . 'composer') and include VENDOR_PATH . 'autoload.php';
 
         static::addNamespace([
-            'frame'=>CORE_PATH
+            'frame' => CORE_PATH,
         ]);
     }
 
     public static function addClassMap($class, $path = '')
     {
-        if(is_array($class)){
+        if (is_array($class)) {
             static::$class_map = array_merge(static::$class_map, $class);
-        }else{
+        } else {
             static::$class_map[$class] = $path;
         }
     }
 
-    public static function addNamespace($namespace, $alias = '')
+    public static function addNamespace($namespace, $path = '')
     {
-        if(is_array($namespace)){
+        if (is_array($namespace)) {
             static::$namespace_alias = array_merge(static::$namespace_alias, $namespace);
-        }else{
-            static::$namespace_alias[$namespace] = $alias;
+        } else {
+            static::$namespace_alias[$namespace] = $path;
         }
     }
 
@@ -60,6 +62,7 @@ class Loader
             // 非 Win 环境不严格区分大小写
             if (pathinfo($file, PATHINFO_FILENAME) == pathinfo(realpath($file), PATHINFO_FILENAME)) {
                 includeFile($file);
+
                 return true;
             }
         }
@@ -73,13 +76,23 @@ class Loader
             return self::$class_map[$class];
         }
 
-        $class_name = str_replace('\\', '/', $class);
-        $namespace = dirname($class_name);
+        $class_name = trim(str_replace('\\', '/', $class), '/');
+        $info = explode('/', $class_name);
+        $namespace = array_shift($info);
+        $name = implode('/', $info);
 
-        if(!empty(static::$namespace_alias[$namespace])){
-            return static::$namespace_alias[$namespace].basename($class_name).'.php';
+        if (strpos($class_name, $namespace) !== false) {
+            return static::$namespace_alias[$namespace] . $name . '.php';
         }
 
         return self::$class_map[$class] = false;
+    }
+
+    public static function controller($name)
+    {
+        $module = Request::instance()->module();
+        $class = 'app\\' . (!empty($module) ? $module . '\\controller\\' : '') . $name;
+
+        return App::invokeClass($class);
     }
 }
