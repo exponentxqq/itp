@@ -13,5 +13,5 @@ use frame\Model;
 
 class User extends Model
 {
-
+    
 }

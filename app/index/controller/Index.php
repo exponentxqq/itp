@@ -14,9 +14,25 @@ use frame\Model;
 
 class Index
 {
+    private $a = 11;
     public function index()
     {
         $model = new User();
         dump($model->where("id=10")->select());
+    }
+    
+    public function conn()
+    {
+        try{
+            $db = new \PDO('sqlite:'.ROOT_PATH.'sqlite/test.db');
+//            $db->exec("create table user(id integer primary key,name text)");
+//            $db->query("insert into user VALUES (1, 'zhangsan')");
+            $tmtp = $db->prepare('select * from user');
+            $tmtp->execute();
+            $result = $tmtp->fetchAll();
+            dump($result);
+        }catch (\Exception $e){
+            dump($e->getMessage());
+        }
     }
 }
