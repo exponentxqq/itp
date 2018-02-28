@@ -8,12 +8,15 @@
 
 namespace app\index\controller;
 
+use app\index\model\User;
 use frame\Db;
+use frame\Model;
 
 class Index
 {
     public function index()
     {
-        dump(Db::connect());
+        $model = new User();
+        dump($model->where("id=10")->select());
     }
 }

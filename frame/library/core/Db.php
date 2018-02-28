@@ -11,15 +11,27 @@ namespace frame;
 
 
 use frame\db\driver\Mysql;
+use frame\db\exception\DbException;
 
 class Db
 {
     private static $instance;
 
+    /**
+     * @param array $config
+     * @return mixed
+     * @throws DbException
+     */
     public static function connect($config = [])
     {
+        $config = array_merge(Config::get('database'), $config);
         if(!isset($instance)){
-            static::$instance = new Mysql($config);
+            try{
+                $driver = new Mysql();
+                static::$instance = new \PDO($driver->parseDsn($config), $config['username'], $config['password']);
+            }catch (\Exception $e){
+                throw new DbException('数据库连接失败');
+            }
         }
         return static::$instance;
     }
