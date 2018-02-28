@@ -6,11 +6,9 @@
  * Date: 2017/7/29
  * Time: 上午10:09
  */
-namespace Home\Controller;
+namespace app\home\controller;
 
-use Core\Controller;
-
-class IndexController extends Controller
+class Index
 {
     public function index(){
         dump($_SERVER);

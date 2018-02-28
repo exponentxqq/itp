@@ -13,6 +13,7 @@ class App
 {
     private static $debug = null;
     private static $dispatch = null;
+    private static $file = [];
 
     public static function run()
     {
@@ -46,6 +47,16 @@ class App
                 echo $output;
             }
         }
+
+        if (!empty($config['extra_file_list'])) {
+            foreach ($config['extra_file_list'] as $file) {
+                if (is_file($file) && !isset(static::$file[$file])) {
+                    include $file;
+                    static::$file[$file] = true;
+                }
+            }
+        }
+
         date_default_timezone_set($config['default_timezone']);
 
         return Config::get();
@@ -82,7 +93,7 @@ class App
 
     public static function exec($dispatch, $config)
     {
-        $module = strip_tags(strtolower($dispatch['route'][0] ? : $config['default_module']));
+        $module = strip_tags(strtolower($dispatch['route'][0] ?: $config['default_module']));
         $available = false;
         if (!in_array($module, $config['deny_module_list'])) {
             $available = true;
@@ -103,10 +114,7 @@ class App
         $request->controller($controller)->action($action);
         $instance = Loader::controller($controller);
 
-        $call = [
-            $instance,
-            $action,
-        ];
+        $call = [$instance, $action];
 
         return static::invokeMethod($call);
     }

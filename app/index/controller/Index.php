@@ -8,10 +8,12 @@
 
 namespace app\index\controller;
 
+use frame\Db;
+
 class Index
 {
     public function index()
     {
-        var_dump('hello world');
+        dump(Db::connect());
     }
 }
