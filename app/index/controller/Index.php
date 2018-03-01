@@ -9,16 +9,22 @@
 namespace app\index\controller;
 
 use app\index\model\User;
+use frame\Container;
 use frame\Db;
 use frame\Model;
+use frame\Request;
 
 class Index
 {
-    private $a = 11;
     public function index()
     {
-        $model = new User();
-        dump($model->where("id<10")->select());
+        dump($this);
+        container()->bind('Index', $this);
+        dump(\container()->make('Index'));
+        $request = container()->make('request');
+        dump($request);
+        $request = Container::getInstance()->make('request');
+        dump($request);
     }
     
     public function conn()
@@ -38,13 +44,6 @@ class Index
 
     public function te()
     {
-        $arr = range(1,12);
-        $page = 0;
-        $list_row = 4;
-        while($data = array_slice($arr, $page * $list_row, $list_row)){
-            // $data就是取到的每一页的数据
-            var_dump($data);
-            $page++;
-        }
+
     }
 }

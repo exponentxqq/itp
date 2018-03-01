@@ -12,4 +12,9 @@ namespace frame;
 
 include ROOT_PATH . 'frame/base.php';
 
+$container = Container::getInstance();
+$container->bind('request', function (){
+    return Request::instance();
+});
+
 App::run();

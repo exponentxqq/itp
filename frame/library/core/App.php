@@ -24,7 +24,7 @@ class App
             $request->dispatch(static::$dispatch);
             $data = self::exec(static::$dispatch, $config);
         } catch (\Exception $e) {
-
+            dump($e->getMessage());
         }
     }
 
@@ -116,7 +116,7 @@ class App
 
         $call = [$instance, $action];
 
-        return static::invokeMethod($call);
+        return static::invokeMethod($call, [request()]);
     }
 
     public static function invokeClass($class, $var = [])
