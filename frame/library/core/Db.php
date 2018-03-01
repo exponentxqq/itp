@@ -10,7 +10,6 @@
 namespace frame;
 
 
-use frame\db\driver\Mysql;
 use frame\db\exception\DbException;
 
 class Db
@@ -27,7 +26,10 @@ class Db
         $config = array_merge(Config::get('database'), $config);
         if(!isset($instance)){
             try{
-                $driver = new Mysql();
+                $type = $config['type'];
+                $class = "frame\\db\\driver\\".ucwords($type);
+
+                $driver = new $class();
                 static::$instance = new \PDO($driver->parseDsn($config), $config['username'], $config['password']);
             }catch (\Exception $e){
                 throw new DbException('数据库连接失败');
@@ -35,6 +37,4 @@ class Db
         }
         return static::$instance;
     }
-
-
 }

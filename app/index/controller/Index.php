@@ -18,7 +18,7 @@ class Index
     public function index()
     {
         $model = new User();
-        dump($model->where("id=10")->select());
+        dump($model->where("id<10")->select());
     }
     
     public function conn()
@@ -33,6 +33,18 @@ class Index
             dump($result);
         }catch (\Exception $e){
             dump($e->getMessage());
+        }
+    }
+
+    public function te()
+    {
+        $arr = range(1,12);
+        $page = 0;
+        $list_row = 4;
+        while($data = array_slice($arr, $page * $list_row, $list_row)){
+            // $data就是取到的每一页的数据
+            var_dump($data);
+            $page++;
         }
     }
 }
