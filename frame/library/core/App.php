@@ -68,6 +68,9 @@ class App
         $filename = CONF_PATH . $module . 'database' . CONF_EXT;
         Config::load($filename, 'database');
 
+        $filename = CONF_PATH . $module . 'service' . CONF_EXT;
+        Config::load($filename, 'service');
+
         if (is_dir(CONF_PATH . $module . 'extra')) {
             $dir = CONF_PATH . $module . 'extra';
             $files = scandir($dir);

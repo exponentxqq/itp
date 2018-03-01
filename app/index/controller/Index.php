@@ -9,6 +9,7 @@
 namespace app\index\controller;
 
 use app\index\model\User;
+use frame\Config;
 use frame\Container;
 use frame\Db;
 use frame\Model;
@@ -44,6 +45,6 @@ class Index
 
     public function te()
     {
-
+        dump(Config::get());
     }
 }
