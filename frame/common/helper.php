@@ -28,6 +28,36 @@ function dump()
     return print htmlspecialchars_decode($output);
 }
 
+/**
+ * 优化的require_once
+ * @param string $filename 文件地址
+ * @return boolean
+ */
+function require_cache($filename) {
+    static $_importFiles = array();
+    if (!isset($_importFiles[$filename])) {
+        if (file_exists_case($filename)) {
+            require $filename;
+            $_importFiles[$filename] = true;
+        } else {
+            $_importFiles[$filename] = false;
+        }
+    }
+    return $_importFiles[$filename];
+}
+
+/**
+ * 区分大小写的文件存在判断
+ * @param string $filename 文件地址
+ * @return boolean
+ */
+function file_exists_case($filename) {
+    if (is_file($filename)) {
+        return true;
+    }
+    return false;
+}
+
 function request()
 {
     return \frame\Request::instance();

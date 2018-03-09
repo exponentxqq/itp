@@ -14,6 +14,8 @@ define('TRAITS_PATH', LIB_PATH . 'traits' . DS);
 defined('APP_PATH') or define('APP_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . DS);
 defined('CONF_PATH') or define('CONF_PATH', ROOT_PATH . 'config' . DS);
 defined('VENDOR_PATH') or define('VENDOR_PATH', ROOT_PATH . 'vendor' . DS);
+defined('RUNTIME_PATH') or define('RUNTIME_PATH', APP_PATH.'runtime'.DS);
+defined('CACHE_PATH') or define('CACHE_PATH', RUNTIME_PATH . 'cache' . DS);
 
 defined('CONF_EXT') or define('CONF_EXT', '.php');
 

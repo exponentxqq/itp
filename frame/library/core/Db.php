@@ -10,6 +10,7 @@
 namespace frame;
 
 
+use frame\db\driver\DbDriver;
 use frame\db\exception\DbException;
 
 class Db
@@ -29,6 +30,7 @@ class Db
                 $type = $config['type'];
                 $class = "frame\\db\\driver\\".ucwords($type);
 
+                /** @var DbDriver $driver*/
                 $driver = new $class();
                 static::$instance = new \PDO($driver->parseDsn($config), $config['username'], $config['password']);
             }catch (\Exception $e){

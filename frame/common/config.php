@@ -24,4 +24,13 @@ return [
         'REDIRECT_PATH_INFO',
         'REDIRECT_URL',
     ],
+    'cache'=>[
+        'type'=> 'file',
+        'servers'=>[
+            [
+                'host'=>'',
+                'port'=>''
+            ]
+        ],
+    ]
 ];

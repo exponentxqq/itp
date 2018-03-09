@@ -9,6 +9,7 @@
 namespace app\index\controller;
 
 use app\index\model\User;
+use frame\Cache;
 use frame\Config;
 use frame\Container;
 use frame\Db;
@@ -45,6 +46,9 @@ class Index
 
     public function te()
     {
-        dump(Config::get());
+//        Cache::set('cache', 'haahaha');
+        Cache::clear();
+        dump(Cache::get('file'));
+        dump(Cache::get('cache'));
     }
 }

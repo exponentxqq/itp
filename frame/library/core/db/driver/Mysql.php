@@ -9,7 +9,7 @@
 
 namespace frame\db\driver;
 
-class Mysql
+class Mysql extends DbDriver
 {
     public function parseDsn($config){
         $dsn = 'mysql:';
